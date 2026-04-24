@@ -40,9 +40,15 @@ public slots:
 
     Q_INVOKABLE void purgeRiskProcesses();
 
+    Q_INVOKABLE void setAutoMode(bool enabled) {
+        m_autoMode = enabled;
+    }
+
 private:
     QVector<ProcessInfo> m_processes;
     bool m_isGamingMode = false;
+    bool m_autoMode = false;
+    qint64 m_lastAutoPurge = 0;
 };
 
 #endif // PROCESSMODEL_H

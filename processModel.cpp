@@ -3,6 +3,7 @@
 #include <psapi.h>
 #include <QTimer>
 #include <algorithm>
+#include <QDateTime>
 #include <QDebug>
 
 
@@ -219,6 +220,26 @@ void ProcessModel::refreshProcesses() {
 
     if (!m_processes.isEmpty()) {
         emit dataChanged(index(0, 0), index(m_processes.size() - 1, 7));
+    }
+
+
+    if (m_autoMode) {
+        qint64 currentTime = QDateTime::currentMSecsSinceEpoch();
+
+        // Only check every 30 seconds to avoid CPU overhead
+        if (currentTime - m_lastAutoPurge > 30000) {
+            MEMORYSTATUSEX memInfo;
+            memInfo.dwLength = sizeof(MEMORYSTATUSEX);
+
+            if (GlobalMemoryStatusEx(&memInfo)) {
+                // TRIGGER: If RAM usage exceeds 80%, initiate the purge
+                if (memInfo.dwMemoryLoad > 85) {
+                    m_lastAutoPurge = currentTime;
+                    qDebug() << "[SENTINEL] RAM Pressure detected at" << memInfo.dwMemoryLoad << "%. Cleaning...";
+                    purgeRiskProcesses();
+                }
+            }
+        }
     }
 }
 

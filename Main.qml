@@ -119,37 +119,54 @@ Window {
                         }
                     }
 
+
                     RowLayout {
-                                            spacing: 12
-                                            Layout.alignment: Qt.AlignHCenter
+                        spacing: 40
+                        Layout.alignment: Qt.AlignHCenter
 
+                        // --- Profile Switch (Balanced vs Performance) ---
+                        RowLayout {
+                            spacing: 12
+                            Switch {
+                                id: performanceModeSwitch
+                                checked: processModel.isGamingMode
+                                onCheckedChanged: processModel.setGamingMode(checked)
+                            }
+                            Column {
+                                Text {
+                                    text: performanceModeSwitch.checked ? "PERFORMANCE MODE" : "BALANCED MODE"
+                                    color: performanceModeSwitch.checked ? "#ff3333" : "white"
+                                    font.bold: true; font.pixelSize: 12
+                                }
+                                Text {
+                                    text: "ACTIVE"
+                                    color: "#888"; font.pixelSize: 10
+                                }
+                            }
+                        }
 
-                                            Switch {
-                                                id: performanceModeSwitch
-                                                onCheckedChanged: {
-                                                    processModel.setGamingMode(checked)
-                                                }
-                                            }
-
-                                            Column {
-                                                anchors.verticalCenter: parent.verticalCenter
-
-                                                Text {
-                                                    // Dynamic UI Title
-                                                    text: performanceModeSwitch.checked ? "PERFORMANCE MODE" : "BALANCED MODE"
-                                                    color: performanceModeSwitch.checked ? "#ff3333" : "white"
-                                                    font.bold: true;
-                                                    font.pixelSize: 12
-                                                }
-                                                Text {
-                                                    // Dynamic Subtitle reflecting the AI's current priority
-                                                    text: performanceModeSwitch.checked ? "ACTIVE" : "ACTIVE"
-                                                    color: performanceModeSwitch.checked ? "#ff6666" : "#888";
-                                                    font.pixelSize: 10
-                                                    font.bold: performanceModeSwitch.checked
-                                                }
-                                            }
-                                        }
+                        // --- Cleaning Method Switch (Manual vs Automatic) ---
+                        RowLayout {
+                            spacing: 12
+                            Switch {
+                                id: autoModeSwitch
+                                onCheckedChanged: {
+                                    processModel.setAutoMode(checked)
+                                }
+                            }
+                            Column {
+                                Text {
+                                    text: autoModeSwitch.checked ? "AUTOMATIC CLEANING" : "MANUAL CLEANING"
+                                    color: autoModeSwitch.checked ? "#00ffcc" : "white"
+                                    font.bold: true; font.pixelSize: 12
+                                }
+                                Text {
+                                    text: autoModeSwitch.checked ? "SENTINEL ACTIVE" : "WAIT FOR TRIGGER"
+                                    color: "#888"; font.pixelSize: 10
+                                }
+                            }
+                        }
+                    }
 
 
                                         RowLayout {
