@@ -52,4 +52,14 @@ void SystemProvider::updateStats() {
         m_prevKernelTime = kernelTime;
         m_prevUserTime = userTime;
     }
+
+
+    // Calculate Velocity (m) over the last 5 seconds
+    if (m_ramHistory.size() >= 10) {
+        double now = m_ramHistory.last().toDouble();
+        double then = m_ramHistory.at(m_ramHistory.size() - 6).toDouble();
+
+        m_m_pressureVelocity = (now - then) / 5.0; // % per second
+        emit pressureVelocityChanged();
+    }
 }

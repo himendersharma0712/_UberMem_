@@ -223,19 +223,50 @@ void ProcessModel::refreshProcesses() {
     }
 
 
+    // if (m_autoMode) {
+    //     qint64 currentTime = QDateTime::currentMSecsSinceEpoch();
+
+    //     // Only check every 30 seconds to avoid CPU overhead
+    //     if (currentTime - m_lastAutoPurge > 30000) {
+    //         MEMORYSTATUSEX memInfo;
+    //         memInfo.dwLength = sizeof(MEMORYSTATUSEX);
+
+    //         if (GlobalMemoryStatusEx(&memInfo)) {
+    //             // TRIGGER: If RAM usage exceeds 80%, initiate the purge
+    //             if (memInfo.dwMemoryLoad > 85) {
+    //                 m_lastAutoPurge = currentTime;
+    //                 qDebug() << "[SENTINEL] RAM Pressure detected at" << memInfo.dwMemoryLoad << "%. Cleaning...";
+    //                 purgeRiskProcesses();
+    //             }
+    //         }
+    //     }
+    // }
+
+
     if (m_autoMode) {
         qint64 currentTime = QDateTime::currentMSecsSinceEpoch();
 
-        // Only check every 30 seconds to avoid CPU overhead
-        if (currentTime - m_lastAutoPurge > 30000) {
+        if (currentTime - m_lastAutoPurge > 15000) { // 15s cooldown
             MEMORYSTATUSEX memInfo;
             memInfo.dwLength = sizeof(MEMORYSTATUSEX);
 
             if (GlobalMemoryStatusEx(&memInfo)) {
-                // TRIGGER: If RAM usage exceeds 80%, initiate the purge
-                if (memInfo.dwMemoryLoad > 85) {
+                // 1. GET THE ML INPUTS
+                double currentRAM = (double)memInfo.dwMemoryLoad;
+
+                // We'll need a way to access SystemProvider's velocity here
+                // For now, let's assume you pass it or use a singleton
+                double velocity = m_currentVelocity;
+
+                // 2. THE FORECAST (Predicting 5 seconds ahead)
+                double predictedRAM = currentRAM + (velocity * 5.0);
+
+                // 3. THE ML TRIGGER
+                // Trigger if we predict > 90% OR if we are currently > 85%
+                if (predictedRAM > 80.0 || currentRAM > 75.0) {
                     m_lastAutoPurge = currentTime;
-                    qDebug() << "[SENTINEL] RAM Pressure detected at" << memInfo.dwMemoryLoad << "%. Cleaning...";
+                    qDebug() << "[SENTINEL] ML Forecast: Critical Pressure Predicted ("
+                             << predictedRAM << "%). Executing Purge.";
                     purgeRiskProcesses();
                 }
             }

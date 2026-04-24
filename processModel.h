@@ -44,11 +44,16 @@ public slots:
         m_autoMode = enabled;
     }
 
+    Q_INVOKABLE void setVelocity(double v) {
+        m_currentVelocity = v;
+    }
+
 private:
     QVector<ProcessInfo> m_processes;
     bool m_isGamingMode = false;
     bool m_autoMode = false;
     qint64 m_lastAutoPurge = 0;
+    double m_currentVelocity = 0.0;
 };
 
 #endif // PROCESSMODEL_H

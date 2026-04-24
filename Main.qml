@@ -57,6 +57,15 @@ Window {
         }
     }
 
+
+    Connections {
+        target: systemStats
+        function onPressureVelocityChanged() {
+            // Pushes the sensor data into the ML model
+            processModel.setVelocity(systemStats.pressureVelocity)
+        }
+    }
+
     // --- MAIN CONTENT AREA ---
     StackLayout {
         id: pageStack
@@ -281,6 +290,19 @@ Window {
                                                         color: "#44ff44"
                                                         font.pixelSize: 11
                                                         font.family: "Consolas"
+                                                    }
+
+                                                    Text {
+                                                        text: "> PRESSURE VELOCITY: " + systemStats.pressureVelocity.toFixed(2) + " %/s"
+                                                        color: systemStats.pressureVelocity > 1.5 ? "#ff3333" : "#888"
+                                                        font.pixelSize: 11; font.family: "Consolas"
+                                                    }
+
+                                                    Text {
+                                                        property real pred: systemStats.ramUsage + (systemStats.pressureVelocity * 5)
+                                                        text: "> T+5s FORECAST: " + pred.toFixed(1) + "%"
+                                                        color: pred > 90 ? "#ff3333" : "#44ff44"
+                                                        font.pixelSize: 11; font.family: "Consolas"
                                                     }
                                                 }
                                             }
