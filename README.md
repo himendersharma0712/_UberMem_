@@ -4,6 +4,11 @@
 
 ---
 
+## 📸 Overview
+
+<img width="1920" height="1111" alt="UberMem 4_24_2026 6_07_22 PM" src="https://github.com/user-attachments/assets/9726b397-ac31-4ca4-8157-ecb31d5e2992" />
+
+---
 ## 🚀 Key Features
 
 * **Auto Cleanup Mode:** A background monitoring loop that utilizes forecasting math to initiate memory purges before the system reaches critical saturation.
