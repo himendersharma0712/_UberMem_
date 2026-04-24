@@ -1,6 +1,6 @@
-# UberMem v1.0 
+# ÜberMem v1.0 
 
-**UberMem V1.0** is a high-performance, predictive kernel memory optimizer developed for Windows environments. Unlike traditional reactive memory cleaners, UberMem utilizes a **Temporal Pressure Forecasting (TPF)** engine and distilled Machine Learning (ML) logic to proactively stabilize system memory before performance degradation occurs.
+**ÜberMem V1.0** is a high-performance, predictive kernel memory optimizer developed for Windows environments. Unlike traditional reactive memory cleaners, UberMem utilizes a **Temporal Pressure Forecasting (TPF)** engine and distilled Machine Learning (ML) logic to proactively stabilize system memory before performance degradation occurs.
 
 ---
 
