@@ -41,19 +41,18 @@ Processes are evaluated based on weighted feature extraction:
 
 ---
 
-## 🏗️ Installation & Build
+## 🏗️ Installation & Prerequisites
 
 ### Prerequisites
 * Windows 10/11 (Elevated Privileges Required)
 * Qt 6.6+ with MinGW Toolchain
 * Administrator rights are essential for `SE_PROF_SINGLE_PROCESS_NAME` token adjustments.
 
-### Building
-1.  Open the project in **Qt Creator**.
-2.  Ensure the `app.manifest` and `resources.rc` are included in the build to force UAC elevation.
-3.  Set the build profile to **Release**.
-4.  Run as **Administrator**.
-
+### Installation
+* Open the Releases page.
+* Download the latest .zip file.
+* Extract the archive.
+* Launch appUberMem.exe.
 ---
 
 ## 📁 Project Structure
