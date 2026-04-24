@@ -88,13 +88,13 @@ Window {
                     Layout.alignment: Qt.AlignHCenter
 
                     GaugeComponent {
-                        label: "RAM USAGE"
+                        label: "Memory Usage"
                         value: typeof systemStats !== "undefined" ? systemStats.ramUsage : 42.0
                         ringColor: "#76b9ed"
                     }
 
                     GaugeComponent {
-                        label: "CPU LOAD"
+                        label: "CPU Utlization"
                         value: typeof systemStats !== "undefined" ? systemStats.cpuUsage : 0.0
                         ringColor: "#bb86fc"
                     }
@@ -106,8 +106,8 @@ Window {
 
                     Rectangle {
                         id: purgeButton
-                        width: 260
-                        height: 50
+                        width: 240
+                        height: 35
                         radius: 10
                         Layout.alignment: Qt.AlignCenter
 
@@ -123,7 +123,7 @@ Window {
 
                         Text {
                             anchors.centerIn: parent
-                            text: "CLEAN MEMORY"
+                            text: "Clean Memory"
                             color: "white"
                             font.bold: true
                         }
@@ -156,13 +156,13 @@ Window {
                             }
                             Column {
                                 Text {
-                                    text: performanceModeSwitch.checked ? "PERFORMANCE MODE" : "BALANCED MODE"
+                                    text: performanceModeSwitch.checked ? "Performance Mode" : "Balanced Mode"
                                     color: performanceModeSwitch.checked ? "orange" : "white"
-                                    font.bold: true; font.pixelSize: 12
+                                    font.bold: true; font.pixelSize: 14
                                 }
                                 Text {
-                                    text: "ACTIVE"
-                                    color: "#888"; font.pixelSize: 10
+                                    text: "Active"
+                                    color: "#888"; font.pixelSize: 11
                                 }
                             }
                         }
@@ -178,13 +178,13 @@ Window {
                             }
                             Column {
                                 Text {
-                                    text: autoModeSwitch.checked ? "AUTO CLEANUP" : "AUTO CLEANUP"
+                                    text: autoModeSwitch.checked ? "Auto Cleanup" : "Auto Cleanup"
                                     color: autoModeSwitch.checked ? "#00ffcc" : "white"
-                                    font.bold: true; font.pixelSize: 12
+                                    font.bold: true; font.pixelSize: 14
                                 }
                                 Text {
                                     text: autoModeSwitch.checked ? "Monitoring system" : "Runs when memory usage spikes"
-                                    color: "#888"; font.pixelSize: 10
+                                    color: "#888"; font.pixelSize: 11
                                 }
                             }
                         }
@@ -206,9 +206,9 @@ Window {
                                                 clip: true
 
                                                 Text {
-                                                    text: "TEMPORAL MEMORY PRESSURE (60S)"
+                                                    text: "Temporal Memory Pressure (60s)"
                                                     color: "#888"
-                                                    font.pixelSize: 10
+                                                    font.pixelSize: 12
                                                     font.bold: true
                                                     anchors.top: parent.top; anchors.left: parent.left; anchors.margins: 12
                                                 }
@@ -266,9 +266,9 @@ Window {
                                                 radius: 8
 
                                                 Text {
-                                                    text: "ML DIAGNOSTICS"
+                                                    text: "Live Diagnostics"
                                                     color: "#888"
-                                                    font.pixelSize: 10
+                                                    font.pixelSize: 12
                                                     font.bold: true
                                                     anchors.top: parent.top; anchors.left: parent.left; anchors.margins: 12
                                                 }
@@ -281,41 +281,35 @@ Window {
                                                     spacing: 8
 
                                                     Text {
-                                                        text: "> ACTIVE PROFILE: " + (performanceModeSwitch.checked ? "PERFORMANCE" : "BALANCED")
+                                                        text: "> Profile: " + (performanceModeSwitch.checked ? "Performance" : "Balanced")
                                                         color: performanceModeSwitch.checked ? "#ff3333" : "#3dccff"
-                                                        font.pixelSize: 11
+                                                        font.pixelSize: 12
                                                         font.family: "Consolas"
                                                     }
                                                     Text {
-                                                        text: "> RAM FLOOR: " + (performanceModeSwitch.checked ? "400.0 MB" : "77.15 MB")
+                                                        text: "> Memory Floor: " + (performanceModeSwitch.checked ? "400.0 MB" : "77.15 MB")
                                                         color: "#aaa"
-                                                        font.pixelSize: 11
+                                                        font.pixelSize: 12
                                                         font.family: "Consolas"
                                                     }
                                                     Text {
-                                                        text: "> DISK TOLERANCE: " + (performanceModeSwitch.checked ? "STRICT" : "MODERATE")
+                                                        text: "> Disk Tolerance: " + (performanceModeSwitch.checked ? "Strict" : "Moderate")
                                                         color: "#aaa"
-                                                        font.pixelSize: 11
-                                                        font.family: "Consolas"
-                                                    }
-                                                    Text {
-                                                        text: "> SYSTEM STATE: STABILIZING"
-                                                        color: "#44ff44"
-                                                        font.pixelSize: 11
+                                                        font.pixelSize: 12
                                                         font.family: "Consolas"
                                                     }
 
                                                     Text {
-                                                        text: "> PRESSURE VELOCITY: " + systemStats.pressureVelocity.toFixed(2) + " %/s"
+                                                        text: "> Pressure Velocity: " + systemStats.pressureVelocity.toFixed(2) + " %/s"
                                                         color: systemStats.pressureVelocity > 1.5 ? "#ff3333" : "#888"
-                                                        font.pixelSize: 11; font.family: "Consolas"
+                                                        font.pixelSize: 12; font.family: "Consolas"
                                                     }
 
                                                     Text {
                                                         property real pred: systemStats.ramUsage + (systemStats.pressureVelocity * 5)
-                                                        text: "> T+5s FORECAST: " + pred.toFixed(1) + "%"
+                                                        text: "> T+5s Forecast: " + pred.toFixed(1) + "%"
                                                         color: pred > 90 ? "#ff3333" : "#44ff44"
-                                                        font.pixelSize: 11; font.family: "Consolas"
+                                                        font.pixelSize: 12; font.family: "Consolas"
                                                     }
                                                 }
                                             }
@@ -341,9 +335,8 @@ Window {
                         anchors.fill: parent; anchors.leftMargin: 20; anchors.rightMargin: 20
                         Repeater {
                             model: [
-                                {t: "NAME", w: 220}, {t: "PID", w: 80}, {t: "STATUS", w: 160},
-                                {t: "CPU", w: 80}, {t: "MEMORY", w: 120}, {t: "DISK", w: 100},
-                                {t: "PAGEFILE", w: 100}, {t: "ML PREDICTION", w: 150}
+                                {t: "Name", w: 220}, {t: "PID", w: 80}, {t: "Status", w: 160}, {t: "Memory", w: 120}, {t: "Disk", w: 100},
+                                {t: "PageFile", w: 100}, {t: "Stability", w: 150}
                             ]
                             delegate: Text {
                                 text: modelData.t; width: modelData.w
@@ -414,11 +407,7 @@ Window {
                                 anchors.verticalCenter: parent.verticalCenter
                             }
 
-                            // 4. CPU
-                            Text {
-                                text: model.cpu; width: 80; color: "#bb86fc"
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
+
 
                             // 5. MEMORY (Keep the Heatmap Bar)
                             Rectangle {
@@ -450,8 +439,8 @@ Window {
                             Text {
                                 text: model.prediction === "" ? "WAITING..." : model.prediction
                                 width: 150 // Matches header width
-                                color: model.prediction === "STABLE" ? "#4caf50" :
-                                       model.prediction === "RISK" ? "#f44336" : "#444"
+                                color: model.prediction === "Stable" ? "#4caf50" :
+                                       model.prediction === "Unstable" ? "#f44336" : "#444"
                                 font.pixelSize: 11; font.bold: true
                                 anchors.verticalCenter: parent.verticalCenter
                             }

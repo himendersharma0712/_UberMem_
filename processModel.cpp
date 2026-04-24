@@ -101,7 +101,7 @@ QVariant ProcessModel::data(const QModelIndex &index, int role) const {
     case RawMemRole:   return process.memUsage;
     case DiskRole:     return QString::number(process.diskUsage, 'f', 1) + " KB/s";
     case PagefileRole: return QString::number(process.pagefileUsage, 'f', 1) + " MB";
-    case PredictionRole: return (process.importanceScore > 0.7) ? "STABLE" : "RISK";
+    case PredictionRole: return (process.importanceScore > 0.7) ? "Stable" : "Unstable";
     default:           return QVariant();
     }
 }
